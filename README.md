@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 令和ビジネスアイデア図鑑
 
-## Getting Started
+新時代を生きるぜ。今すぐ挑戦できるビジネスアイデアを集めたメディア。
 
-First, run the development server:
+## 開発
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 を開いてください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 記事の追加方法
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`content/articles/` に Markdown ファイル（`.md`）を1つ追加するだけで記事が公開されます。ファイル名がそのまま記事のURL（スラッグ）になります。
 
-## Learn More
+例: `content/articles/my-new-idea.md`
 
-To learn more about Next.js, take a look at the following resources:
+```markdown
+---
+title: "記事タイトル"
+date: "2026-08-24"
+tags: ["AI", "マーケティング"]
+excerpt: "一覧ページに表示される要約文。"
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ここから本文をMarkdownで書きます。見出しやリスト、リンクなどが使えます。
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `tags` に指定した文字列は自動的にタグページ（`/tags/タグ名`）に紐づきます。
+- ビルド時に `content/articles/` 内の全 `.md` ファイルが自動で読み込まれるため、コードの変更は不要です。
 
-## Deploy on Vercel
+## 構成
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `content/articles/*.md` — 記事本体（frontmatter + Markdown）
+- `src/lib/articles.ts` — 記事の読み込み・タグ集計・Markdown→HTML変換
+- `src/app/` — ページ（トップ、記事詳細、タグ一覧、タグ別記事一覧）
+- `src/components/Header.tsx` — レトロ調のテキストロゴ・ヘッダー

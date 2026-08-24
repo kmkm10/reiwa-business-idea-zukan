@@ -1,26 +1,246 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #cbe8ff;
+  --foreground: #101040;
+  --window-bg: #ece9d8;
+  --window-light: #ffffff;
+  --window-dark: #808080;
+  --titlebar-start: #0a246a;
+  --titlebar-end: #a6caf0;
+  --link: #0000ee;
+  --link-visited: #551a8b;
+  --link-active: #ff0000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes blinker {
+  50% {
+    opacity: 0;
   }
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.55) 0,
+      rgba(255, 255, 255, 0.55) 2px,
+      transparent 2px,
+      transparent 14px
+    ),
+    linear-gradient(180deg, #cfeaff 0%, #eef8ff 35%, #cfeaff 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "MS Pゴシック", "MS PGothic", "ヒラギノ角ゴ Pro W3", Osaka, sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--link);
+}
+a:visited {
+  color: var(--link-visited);
+}
+a:active {
+  color: var(--link-active);
+}
+
+.blink {
+  animation: blinker 1s step-start infinite;
+}
+
+.marquee-track {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.marquee-track span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 28s linear infinite;
+}
+
+.rainbow-rule {
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  border: none;
+  margin: 0;
+}
+
+.retro-titlebar {
+  background: linear-gradient(90deg, var(--titlebar-start), var(--titlebar-end));
+  color: #fff;
+  font-weight: bold;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.retro-btn-dots span {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 3px;
+  background: var(--window-bg);
+  border: 1px solid #000;
+  text-align: center;
+  line-height: 13px;
+  font-size: 10px;
+  color: #000;
+  font-family: Arial, sans-serif;
+}
+
+.retro-window {
+  background: var(--window-bg);
+  border: 2px solid;
+  border-color: var(--window-light) var(--window-dark) var(--window-dark) var(--window-light);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.retro-window-body {
+  background: #fffef2;
+  border: 2px solid;
+  border-color: var(--window-dark) var(--window-light) var(--window-light) var(--window-dark);
+  margin: 8px;
+  padding: 16px;
+}
+
+.retro-card {
+  background: #fffef2;
+  border: 2px solid;
+  border-color: var(--window-light) var(--window-dark) var(--window-dark) var(--window-light);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+  padding: 16px;
+}
+
+.retro-tag {
+  display: inline-block;
+  border: 2px solid;
+  border-color: var(--window-light) var(--window-dark) var(--window-dark) var(--window-light);
+  background: #ffd9f5;
+  padding: 2px 8px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #7a0060;
+}
+.retro-tag:hover {
+  border-color: var(--window-dark) var(--window-light) var(--window-light) var(--window-dark);
+}
+
+.retro-badge-new {
+  display: inline-block;
+  background: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 1px 6px;
+  border: 1px solid #800000;
+}
+
+.retro-article :is(h2, h3) {
+  color: #0a246a;
+  border-bottom: 2px dotted #0a246a;
+  padding-bottom: 2px;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+.retro-article p {
+  margin: 0.9em 0;
+}
+.retro-article ul,
+.retro-article ol {
+  margin: 0.9em 0 0.9em 1.5em;
+}
+.retro-article li {
+  margin: 0.3em 0;
+}
+.retro-article a {
+  text-decoration: underline;
+}
+.retro-article hr {
+  border: none;
+  height: 4px;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  margin: 1.5em 0;
+}
+
+.retro-logo-title {
+  font-weight: 900;
+  font-size: 2.25rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+}
+@media (min-width: 640px) {
+  .retro-logo-title {
+    font-size: 3rem;
+  }
+}
+.retro-logo-next,
+.retro-logo-spark {
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 rgba(255, 255, 255, 0.6), 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.retro-logo-next {
+  color: var(--titlebar-start);
+}
+.retro-logo-spark {
+  color: #ff8c00;
+}
+.retro-logo-star {
+  color: #ffd700;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 0 #000;
+}
+.retro-logo-sub {
+  margin-top: 4px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 0.95rem;
+  background: linear-gradient(90deg, red, orange, #d4b400, green, blue, indigo, violet);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.retro-counter {
+  display: inline-block;
+  background: #000;
+  color: #33ff33;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 3px 8px;
+  border: 2px inset #808080;
 }
