@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getAllTags, getArticlesByTag, getLatestArticleSlugs } from "@/lib/articles";
-import ArticleCard from "@/components/ArticleCard";
+import { getAllTags, getArticlesByTag } from "@/lib/articles";
+import TagArticleList from "@/components/TagArticleList";
 
 export function generateStaticParams() {
   return getAllTags().map(({ tag }) => ({ tag }));
@@ -24,31 +23,8 @@ export default async function TagPage({
 }) {
   const { tag: rawTag } = await params;
   const tag = decodeURIComponent(rawTag);
-  const articles = getArticlesByTag(tag);
-  const latestSlugs = getLatestArticleSlugs(3);
 
-  if (articles.length === 0) notFound();
+  if (getArticlesByTag(tag).length === 0) notFound();
 
-  return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-      <Link href="/" className="font-bold underline">
-        ◀ 記事一覧に戻る
-      </Link>
-
-      <section className="retro-window mt-4">
-        <div className="retro-titlebar">
-          <span>◆ 【{tag}】の記事 ◆</span>
-        </div>
-        <div className="retro-window-body grid gap-4 sm:grid-cols-2">
-          {articles.map((article) => (
-            <ArticleCard
-              key={article.slug}
-              article={article}
-              isNew={latestSlugs.has(article.slug)}
-            />
-          ))}
-        </div>
-      </section>
-    </div>
-  );
+  return <TagArticleList tag={tag} page={1} />;
 }

@@ -155,6 +155,12 @@ a:active {
   border-color: var(--window-dark) var(--window-light) var(--window-light) var(--window-dark);
 }
 
+.retro-tag-active {
+  background: #ff8c00;
+  color: #fff;
+  border-color: var(--window-dark) var(--window-light) var(--window-light) var(--window-dark);
+}
+
 .retro-badge-new {
   display: inline-block;
   background: #ff0000;

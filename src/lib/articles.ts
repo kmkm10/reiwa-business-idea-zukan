@@ -77,6 +77,25 @@ export function getLatestArticleSlugs(count = 3): Set<string> {
   return new Set(getAllArticles().slice(0, count).map((article) => article.slug));
 }
 
+export const ARTICLES_PER_PAGE = 200;
+
+export type Page<T> = {
+  items: T[];
+  currentPage: number;
+  totalPages: number;
+};
+
+export function paginate<T>(items: T[], page: number, perPage = ARTICLES_PER_PAGE): Page<T> {
+  const totalPages = Math.max(1, Math.ceil(items.length / perPage));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const start = (currentPage - 1) * perPage;
+  return {
+    items: items.slice(start, start + perPage),
+    currentPage,
+    totalPages,
+  };
+}
+
 export async function markdownToHtml(markdown: string): Promise<string> {
   const result = await unified()
     .use(remarkParse)
