@@ -73,6 +73,10 @@ export function getArticlesByTag(tag: string): Article[] {
   return getAllArticles().filter((article) => article.tags.includes(tag));
 }
 
+export function getLatestArticleSlugs(count = 3): Set<string> {
+  return new Set(getAllArticles().slice(0, count).map((article) => article.slug));
+}
+
 export async function markdownToHtml(markdown: string): Promise<string> {
   const result = await unified()
     .use(remarkParse)

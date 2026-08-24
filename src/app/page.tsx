@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { getAllArticles, getAllTags } from "@/lib/articles";
+import { getAllArticles, getAllTags, getLatestArticleSlugs } from "@/lib/articles";
 import ArticleCard from "@/components/ArticleCard";
 import TagBadge from "@/components/TagBadge";
 
 export default function Home() {
   const articles = getAllArticles();
   const tags = getAllTags();
+  const latestSlugs = getLatestArticleSlugs(3);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
@@ -33,7 +34,13 @@ export default function Home() {
               にMarkdownファイルを追加してください。
             </p>
           ) : (
-            articles.map((article) => <ArticleCard key={article.slug} article={article} />)
+            articles.map((article) => (
+              <ArticleCard
+                key={article.slug}
+                article={article}
+                isNew={latestSlugs.has(article.slug)}
+              />
+            ))
           )}
         </div>
       </section>

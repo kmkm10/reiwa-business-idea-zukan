@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getAllTags, getArticlesByTag } from "@/lib/articles";
+import { getAllTags, getArticlesByTag, getLatestArticleSlugs } from "@/lib/articles";
 import ArticleCard from "@/components/ArticleCard";
 
 export function generateStaticParams() {
@@ -25,6 +25,7 @@ export default async function TagPage({
   const { tag: rawTag } = await params;
   const tag = decodeURIComponent(rawTag);
   const articles = getArticlesByTag(tag);
+  const latestSlugs = getLatestArticleSlugs(3);
 
   if (articles.length === 0) notFound();
 
@@ -40,7 +41,11 @@ export default async function TagPage({
         </div>
         <div className="retro-window-body grid gap-4 sm:grid-cols-2">
           {articles.map((article) => (
-            <ArticleCard key={article.slug} article={article} />
+            <ArticleCard
+              key={article.slug}
+              article={article}
+              isNew={latestSlugs.has(article.slug)}
+            />
           ))}
         </div>
       </section>
