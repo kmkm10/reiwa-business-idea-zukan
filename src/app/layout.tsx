@@ -16,10 +16,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
         <hr className="rainbow-rule" />
         <footer className="bg-[#ece9d8] py-6 text-center text-xs text-black">
-          <p className="mb-2">
-            <span className="retro-counter">あなたは 000128 人目の訪問者です</span>
-          </p>
-          <p>本サイトは 800×600 表示を推奨しています。相互リンク募集中！</p>
+          <p className="mb-2">本サイトは 800×600 表示を推奨しています。相互リンク募集中！</p>
           <p>© {new Date().getFullYear()} 令和ビジネスアイデア図鑑 All Rights Reserved.</p>
         </footer>
       </body>
